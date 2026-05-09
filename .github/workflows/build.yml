@@ -27,7 +27,8 @@ jobs:
       - name: Generate App Assets
         run: |
           npm install @capacitor/assets
-          npx @capacitor/assets generate --android --icon-path assets/icon-only.png --splash-path assets/splash.png --android-project android
+          npx @capacitor/assets generate --android
+
 
 
       - name: Sync Capacitor Android
