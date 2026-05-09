@@ -155,7 +155,6 @@ a { text-decoration: none; color: inherit; }
   z-index: 100;
   background: var(--white);
   border-bottom: 1px solid var(--border);
-  min-height: calc(56px + env(safe-area-inset-top));
   padding: env(safe-area-inset-top) 12px 0 12px;
   display: flex; 
   align-items: center; 
@@ -1853,6 +1852,9 @@ a { text-decoration: none; color: inherit; }
 </nav>
 
 <script>
+
+import { StatusBar, Style } from '@capacitor/status-bar';
+
 /* ═══════════════════════════════════
    FIREBASE
 ═══════════════════════════════════ */
@@ -3152,27 +3154,54 @@ updateBadges();
 const LOGO_LIGHT = './assets/logo/light_nobg.png';
 const LOGO_DARK  = './assets/logo/dark_nobg.png';
 
+const updateStatusBar = async (theme) => {
+  try {
+
+    if (window.Capacitor && window.Capacitor.isPluginAvailable('StatusBar')) {
+      const { StatusBar, Style } = window.Capacitor.Plugins;
+      if (theme === 'dark') {
+        await StatusBar.setStyle({ style: Style.Dark });
+      } else {
+        await StatusBar.setStyle({ style: Style.Light });
+      }
+    }
+  } catch (e) {
+    console.error('StatusBar update failed', e);
+  }
+};
+
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   const isDark = theme === 'dark';
+  
+ 
+  updateStatusBar(theme);
+
   // Navbar toggle icon
   const toggle = document.getElementById('theme-toggle');
   if (toggle) toggle.textContent = isDark ? '☀️' : '🌙';
+
   // Sidebar toggle label
   const sbIcon = document.getElementById('sb-theme-icon');
   const sbLabel = document.getElementById('sb-theme-label');
   if (sbIcon) sbIcon.textContent = isDark ? '☀️' : '🌙';
   if (sbLabel) sbLabel.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+
   // Logos
   const logoSrc = isDark ? LOGO_DARK : LOGO_LIGHT;
   const el = document.getElementById('logo-img');
   const sb = document.getElementById('sb-logo-img');
   const ld = document.getElementById('loader-logo-img');
   const lg = document.getElementById('login-logo-img');
+
   if (el) el.src = logoSrc;
-  if (sb) { sb.src = './assets/logo/dark_nobg.png'; sb.style.filter = ''; }
+  if (sb) { 
+    sb.src = './assets/logo/dark_nobg.png'; 
+    sb.style.filter = ''; 
+  }
   if (ld) ld.src = logoSrc;
   if (lg) lg.src = logoSrc;
+
   localStorage.setItem('alfonex_theme', theme);
 }
 
