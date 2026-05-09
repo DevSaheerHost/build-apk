@@ -24,6 +24,11 @@ jobs:
       - name: Install NPM Dependencies
         run: npm install
 
+              - name: Generate App Assets
+        run: |
+          npm install @capacitor/assets
+          npx capacitor-assets generate --android --icon-path assets/logo.png --splash-path assets/splash.png
+
       - name: Sync Capacitor Android
         run: npx cap sync android
 
