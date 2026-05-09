@@ -150,14 +150,17 @@ a { text-decoration: none; color: inherit; }
 
 /* ─── NAVBAR ─── */
 #navbar {
-  position: sticky; top: 0; z-index: 100;
+  position: sticky; 
+  top: 0; 
+  z-index: 100;
   background: var(--white);
   border-bottom: 1px solid var(--border);
-  height: 56px; padding: 0 12px;
-  display: flex; align-items: center; gap: 8px;
+  min-height: calc(56px + env(safe-area-inset-top));
+  padding: env(safe-area-inset-top) 12px 0 12px;
+  display: flex; 
+  align-items: center; 
+  gap: 8px;
   box-shadow: 0 1px 0 var(--border), 0 2px 8px rgba(0,0,0,0.04);
-
-  padding-top: env(safe-area-inset-top);
 }
 #nav-ham {
   background: none; border: none; cursor: pointer;
