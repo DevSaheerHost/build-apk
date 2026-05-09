@@ -1,5 +1,11 @@
 {
   "appId": "com.alfonex.app",
   "appName": "alfonex",
-  "webDir": "www"
+  "webDir": "www",
+  "plugins": {
+    "StatusBar": {
+      "overlaysWebView": false
+    }
+  }
 }
+
